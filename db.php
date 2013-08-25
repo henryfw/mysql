@@ -42,23 +42,23 @@ class DB {
     public $logs = array();
     public $index = 0; // for toString
 
-    function __construct($host, $user, $pass, $name, $link_name) {
+    public function __construct($host, $user, $pass, $name, $link_name) {
         $this->link = new mysqli($host, $user, $pass, $name);
         $this->link_name = $link_name;
         $this->index = ++ self::$used_index;
     }
 
 
-    function __toString() {
+    public function __toString() {
         return "db_" . $this->index . "_" . $this->link_name;
     }
 
-    function affected_rows() {
+    public function affected_rows() {
         $link = $this->link;
         return $link->affected_rows;
     }
 
-    function count($table, $where = '', $col = '') {
+    public function count($table, $where = '', $col = '') {
         $link = $this->link;
 
         if ($col == '') {
@@ -89,7 +89,7 @@ class DB {
         }
     }
 
-    function delete($table, $where = '', $limit = 1, $use_escape = 1) {
+    public function delete($table, $where = '', $limit = 1, $use_escape = 1) {
         $link = $this->link;
         $limit = (int) $limit;
 
@@ -106,17 +106,17 @@ class DB {
         return $link->affected_rows;
     }
 
-    function error() {
+    public function error() {
         $link = $this->link;
         return $link->error;
     }
 
-    function escape($data) {
+    public function escape($data) {
         $link = $this->link;
         return $link->escape_string(trim($data));
     }
 
-    function get($table, $col = '', $where = '') { // get one value
+    public function get($table, $col = '', $where = '') { // get one value
         $link = $this->link;
 
         if ($col == '') {
@@ -143,7 +143,7 @@ class DB {
         }
     }
 
-    function get_row($table = '', $col = '', $where = '') { // get one row as array
+    public function get_row($table = '', $col = '', $where = '') { // get one row as array
         $link = $this->link;
 
         if ($col == '')
@@ -172,7 +172,7 @@ class DB {
         }
     }
 
-    function get_all_rows($table = '', $col = '', $where = '', $start = 0, $limit = 0) { // get  many rows
+    public function get_all_rows($table = '', $col = '', $where = '', $start = 0, $limit = 0) { // get  many rows
         $link = $this->link;
 
         if ($col == '')
@@ -211,7 +211,7 @@ class DB {
         }
     }
 
-    function insert($table, $data, $on_duplicate_key_data = '', $alt_mode = 0, $use_escape = 1) {
+    public function insert($table, $data, $on_duplicate_key_data = '', $alt_mode = 0, $use_escape = 1) {
         $link = $this->link;
 
         $additional_query = '';
@@ -289,7 +289,7 @@ class DB {
         }
     }
 
-    function insert_id($link_id = 0) {
+    public function insert_id($link_id = 0) {
         $link = $this->link;
         return $link->insert_id;
     }
@@ -300,7 +300,7 @@ class DB {
      *
      * @param string $operator can be sum, min, avg, etc.
      */
-    function operator($operator, $table, $col, $where = '') {
+    public function operator($operator, $table, $col, $where = '') {
         $link = $this->link;
 
         if (is_array($where)) {
@@ -329,7 +329,7 @@ class DB {
         }
     }
 
-    function query($data) {
+    public function query($data) {
         $link = $this->link;
         $result = $link->query($data);
 
@@ -343,7 +343,7 @@ class DB {
         return $result;
     }
 
-    function select($table, $col = '', $where = '', $parameters = '') { // for multi row select queries, $result = DB::select(); while($row = $result->fetch_array()) {}
+    public function select($table, $col = '', $where = '', $parameters = '') { // for multi row select queries, $result = DB::select(); while($row = $result->fetch_array()) {}
         $link = $this->link;
 
         if ($col == '')
@@ -364,7 +364,7 @@ class DB {
     }
 
 
-    function update($table, $data, $where = '', $use_escape = 1) {
+    public function update($table, $data, $where = '', $use_escape = 1) {
         $link = $this->link;
 
         if (is_array($where)) {
