@@ -44,4 +44,9 @@ Usage:
     }
     
     
+    // to get all queries ran using a log
+    $db->logging = true; // set before running any methods
+    var_dump($db->logs); // print at end of calls
+    
+    
     
