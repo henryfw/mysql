@@ -171,7 +171,7 @@ class DB {
         }
     }
 
-    function get_all_rows($table = '', $col = '', $where = '') { // get  many rows
+    function get_all_rows($table = '', $col = '', $where = '', $start = 0, $limit = 0) { // get  many rows
         $link = $this->link;
 
         if ($col == '')
@@ -184,7 +184,11 @@ class DB {
             $where = $this->parse_where_array($where);
         }
 
-        $result = $this->query("SELECT $col FROM " . $this->escape($table) . " " . (trim($where) != '' ? " WHERE $where " : '') );
+        $limit_query = "";
+        if ($limit) {
+            $limit_query = " LIMIT $start, $limit ";
+        }
+        $result = $this->query("SELECT $col FROM " . $this->escape($table) . " " . (trim($where) != '' ? " WHERE $where " : '') . $limit_query );
 
 
         if ($link->error) {
