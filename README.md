@@ -51,5 +51,6 @@ Usage:
     $db->logging = true; // set before running any methods
     print_r($db->logs); // print at end of calls
     
-    
+=====
+MIT License
     
