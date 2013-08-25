@@ -29,7 +29,7 @@ class DB {
         }
         return self::$_registry[$hash];
     }
- 
+
 
     static function hash_registry_key(array $connection_data) {
         return strtolower("{$connection_data['host']}{$connection_data['user']}{$connection_data['name']}");
@@ -247,7 +247,7 @@ class DB {
         if ($on_duplicate_key_data != '') {
             if (is_array($on_duplicate_key_data)) {
                 if (!count($on_duplicate_key_data)) {
-                    trigger_error('No data has been specified.');
+                    throw new Exception('No data has been specified.');
                 }
                 $query = array(); // reset the data array!!!!!!
                 foreach ($on_duplicate_key_data AS $col => $value) {
@@ -357,7 +357,7 @@ class DB {
         if (is_array($data)) {
             $query = array();
             if (!count($data)) {
-                trigger_error('No data has been specified.');
+                throw new Exception('No data has been specified.');
             }
             foreach ($data AS $col => $value) {
                 if (is_array($value)) {
@@ -380,7 +380,7 @@ class DB {
             return $link->affected_rows;
         } else {
             if (trim($data) == '') {
-                trigger_error('No data entered.');
+                throw new Exception('No data entered.');
             }
             $this->query("UPDATE " . $this->escape($table) . " SET $data " . ( trim($where) != '' ? " WHERE $where " : ''));
 
