@@ -31,6 +31,9 @@ Usage:
     // insert
     $insert_id_or_success = $db->insert("test_table", array("col_name" => "new_value") );
     
+    // insert with on duplicate key
+    $success = $db->insert("test_table", array("col_name", "new_value"), array("id" => 1), array("col_name", "new_value_on_dup_key"));
+    
     
     // delete
     $success = $db->delete("test_table", array( "id" => 1 ), 1 ); // defaults to limit 1
