@@ -1,7 +1,7 @@
 mysql
 =====
 
-Simple PHP MySQL DB wrapper. All data passed in via array will be escaped automatically. Great for just grabbing one row or one column without having to write a lot of code.
+Simple PHP MySQL DB wrapper using mysqli. All data passed in via array will be escaped automatically. Great for just grabbing one row or one column without having to write a lot of code.
 
 Usage:
 
