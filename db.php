@@ -91,6 +91,7 @@ class DB {
 
     function delete($table, $where = '', $limit = 1, $use_escape = 1) {
         $link = $this->link;
+        $limit = (int) $limit;
 
         if (is_array($where)) {
             $where = $this->parse_where_array($where);
@@ -185,8 +186,10 @@ class DB {
         }
 
         $limit_query = "";
-        if ($limit) {
-            $limit_query = " LIMIT $start, $limit ";
+        if ($limit > 0) {
+            $start = (int) $start;
+            $limit = (int) $limit;
+            $limit_query = " LIMIT $start , $limit ";
         }
         $result = $this->query("SELECT $col FROM " . $this->escape($table) . " " . (trim($where) != '' ? " WHERE $where " : '') . $limit_query );
 
