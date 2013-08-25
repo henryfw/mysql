@@ -142,7 +142,7 @@ class DB {
         }
     }
 
-    function get_row($table = '', $col = '', $where = '', $cache = 0) { // get one row as array
+    function get_row($table = '', $col = '', $where = '') { // get one row as array
         $link = $this->link;
 
         if ($col == '')
