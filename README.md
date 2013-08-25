@@ -15,11 +15,11 @@ Usage:
     
     
     // select one col
-    $data = $db->get("test_table", "*", array( "id" => 1 ) );
+    $data = $db->get("test_table", "id", array( "id" => 1 ) );
     
     
     // select one row
-    $data = $db->get_row("test_table", "id, name", array( "id" => 1, "name" => "henry" ) );
+    $data = $db->get_row("test_table", "*", array( "id" => 1, "name" => "henry" ) );
     
     
     // select all table
