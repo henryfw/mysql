@@ -220,7 +220,7 @@ class DB {
         if (is_array($data)) {
             $query = array();
             if (!count($data)) {
-                trigger_error('No data has been specified.');
+                throw new Exception('No data has been specified.');
             }
             foreach ($data AS $col => $value) {
                 if (is_array($value)) {
