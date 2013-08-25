@@ -26,7 +26,7 @@ Usage:
     $data = $db->get_all_rows("test_table", "*", " `id` = 1" );
     
     // update
-    $success = $db->update("test_table", array("col_name" => "new_value"), array( "id" => 1 ) );
+    $success = $db->update("test_table", array("col_name" => "new_value", "c2" => "1"), array( "id" => 1 ) );
     
     // insert
     $insert_id_or_success = $db->insert("test_table", array("col_name" => "new_value") );
