@@ -287,6 +287,41 @@ class DB {
         return $link->insert_id;
     }
 
+
+
+    /**
+     *
+     * @param string $operator can be sum, min, avg, etc.
+     */
+    function operator($operator, $table, $col, $where = '') {
+        $link = $this->link;
+
+        if (is_array($where)) {
+            $where = $this->parse_where_array($where);
+        }
+
+        $col = '`' . $col . '`';
+
+        if (!preg_match('/^[A-z_]$/', $operator)) {
+           throw new Exception("operator: $operator must be ^[a-z_]$");
+        }
+
+
+        $result = $this->query("SELECT $operator($col) FROM " . $this->escape($table) . " " . (trim($where) != '' ? " WHERE $where " : ''));
+
+
+        if ($link->error) {
+            throw new Exception($link->error);
+        }
+
+        if ($result->num_rows) {
+            $row = $result->fetch_array(MYSQLI_NUM);
+            return $row[0];
+        } else {
+            return 0;
+        }
+    }
+
     function query($data) {
         $link = $this->link;
         $result = $link->query($data);
@@ -321,30 +356,6 @@ class DB {
         return $result;
     }
 
-    function sum($table, $col, $where = '') {
-        $link = $this->link;
-
-        if (is_array($where)) {
-            $where = $this->parse_where_array($where);
-        }
-
-        $col = '`' . $col . '`';
-
-
-        $result = $this->query("SELECT SUM($col) FROM " . $this->escape($table) . " " . (trim($where) != '' ? " WHERE $where " : ''));
-
-
-        if ($link->error) {
-            throw new Exception($link->error);
-        }
-
-        if ($result->num_rows) {
-            $row = $result->fetch_array(MYSQLI_NUM);
-            return $row[0];
-        } else {
-            return 0;
-        }
-    }
 
     function update($table, $data, $where = '', $use_escape = 1) {
         $link = $this->link;
