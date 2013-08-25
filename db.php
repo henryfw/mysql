@@ -329,6 +329,30 @@ class DB {
         }
     }
 
+    public function parse_where_array($where) {
+
+        if (is_array($where)) {
+            if (!count($where))
+                $where = '';
+            else {
+                $where_temp = array();
+                foreach ($where AS $key => $value) {
+                    if (is_array($value)) { // also for > or <
+                        if (!isset($value[1]))
+                            $value[1] = '=';
+                        $where_temp[] = " `" . $this->escape($key) . "` " . $value[1] . " '" . $this->escape($value[0]) . "'";
+                    }
+                    else {
+                        $where_temp[] = " `" . $this->escape($key) . "` = '" . $this->escape($value) . "'";
+                    }
+                }
+                $where = implode(" AND ", $where_temp);
+            }
+        }
+        return $where;
+    }
+
+
     public function query($data) {
         $link = $this->link;
         $result = $link->query($data);
@@ -416,28 +440,6 @@ class DB {
         $this->query("SET @@session.wait_timeout = " . (int) $time);
     }
 
-    public function parse_where_array($where) {
-
-        if (is_array($where)) {
-            if (!count($where))
-                $where = '';
-            else {
-                $where_temp = array();
-                foreach ($where AS $key => $value) {
-                    if (is_array($value)) { // also for > or <
-                        if (!isset($value[1]))
-                            $value[1] = '=';
-                        $where_temp[] = " `" . $this->escape($key) . "` " . $value[1] . " '" . $this->escape($value[0]) . "'";
-                    }
-                    else {
-                        $where_temp[] = " `" . $this->escape($key) . "` = '" . $this->escape($value) . "'";
-                    }
-                }
-                $where = implode(" AND ", $where_temp);
-            }
-        }
-        return $where;
-    }
 
 }
 
