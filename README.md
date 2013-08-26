@@ -39,7 +39,7 @@ Usage:
     $success = $db->delete("test_table", array( "id" => 1 ), 1 ); // defaults to limit 1
     
     // query for custom query
-    $result = $db->query("SELECT test_table.* FROM test_table LEFT JOIN ON table2 WHERE test_table.id = table2.id ORDER BY test_table.id ");
+    $result = $db->query("SELECT test_table.* FROM test_table LEFT JOIN table2 ON id WHERE table2.col_val = 1 ");
     if ($result->num_rows) {
         while($row = $result->fetch_assoc() ) {
             // do something
